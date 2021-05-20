@@ -76,6 +76,11 @@ windowOpt.colorcolumn = '80'                            -- Draw bar at 80 chars
 windowOpt.linebreak = true                              -- Set newline to indent level of current line/wraps long lines without adding newlines
 windowOpt.breakindent = true                            -- ^
 windowOpt.list = true                                   -- Shows some invisible chars
+--Repeat some options as they might not be set with lua yet...
+cmd('set expandtab')
+cmd('set shiftwidth=4')
+cmd('set smartindent')
+cmd('set tabstop=4')
 
 -------------------- MAPPINGS ------------------------------
 -- <Tab> to navigate the completion menu
