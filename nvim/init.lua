@@ -82,8 +82,8 @@ windowOpt.list = true                                   -- Shows some invisible 
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 
--- Toggle nvim-tree
-map('', '<leader>n', ':NvimTreeToggle<CR>')
+-- Toggle nvim-tree and focus back to window
+map('', '<leader>n', ':NvimTreeToggle<CR><C-W>w')
 
 -- Tab navigate
 map('n', '<leader>[', ':BufferLineCyclePrev<CR>')
