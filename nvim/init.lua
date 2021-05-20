@@ -17,6 +17,7 @@ end
 cmd 'packadd paq-nvim'                                  -- load the package manager
 local paq = require('paq-nvim').paq                     -- a convenient alias
 paq {'savq/paq-nvim', opt = true}                       -- paq-nvim manages itself
+paq {'kyazdani42/nvim-web-devicons'}                    -- Icons - others depend on this
 paq {'marko-cerovac/material.nvim'}                     -- Theme with tree sitter support
 paq {'neovim/nvim-lspconfig'}                           -- lsp config
 paq {'nvim-lua/plenary.nvim'}                           -- Helper functions other plugins depend on
@@ -27,13 +28,17 @@ paq {'kabouzeid/nvim-lspinstall'}                       -- Adds :LspInstall back
 paq {'norcalli/nvim-colorizer.lua'}                     -- Add color to color codes
 paq {'hoob3rt/lualine.nvim'}                            -- Status line
 paq {'lewis6991/spellsitter.nvim'}                      -- Spell check
-paq {'kyazdani42/nvim-web-devicons'}                    -- Icons - others depend on this
-paq {'akinsho/nvim-bufferline.lua'}                     -- Adds gui-like tabs
+paq {'yamatsum/nvim-cursorline'}                        -- Highlights current word and matching words as cursor moves
+--paq {'akinsho/nvim-bufferline.lua'}                     -- Adds gui-like tabs
+paq {'kyazdani42/nvim-tree.lua'}                        -- File Manager
+paq {'folke/which-key.nvim'}                            -- Displays key commands
 
 --------------------  OPTIONS  ----------------------------
 local indent = 4
 cmd 'colorscheme material'                              -- Set theme
 g.material_style = "darker"                             -- Set version of theme (darker, ligher, oceanic, palenight, deep ocean)
+g.mapleader = " "
+globalOpt.timeoutlen = 800                              -- Key map completion timeout
 globalOpt.completeopt = 'menuone,noinsert,preview'      -- Completion options
 globalOpt.hidden = true                                 -- Enable modified buffers in background
 globalOpt.ignorecase = true                             -- Ignorecase in searchs
@@ -49,6 +54,9 @@ globalOpt.wildmenu = true                               -- Enable wildmenu
 globalOpt.modeline = true                               -- Enable vim modeline
 globalOpt.autoread = true                               -- Reload file if has changed while open
 globalOpt.scrolloff = 20                                -- keep x lines of code above/below current line - 24 at my current res is centered
+globalOpt.swapfile = false                              -- Disable swapfile, store buffers in memory
+globalOpt.laststatus = 2                                -- Show statuslines on all windows
+globalOpt.mouse = 'a'                                   -- Enable mouse support always
 --buffer
 bufferOpt.expandtab = true                              -- Tab inserts spaces
 bufferOpt.shiftwidth = indent                           -- Size of indent
@@ -75,9 +83,10 @@ ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
 require'gitsigns'.setup()
 require'colorizer'.setup()
 require'spellsitter'.setup()
+require'which-key'.setup()
 
 --------------------  nvim-bufferline SETUP ----------------
-require'bufferline'.setup{}
+--require'bufferline'.setup{}
 
 --------------------  nvim-compue SETUP --------------------
 require('compe').setup {
@@ -133,6 +142,7 @@ require'lualine'.setup {
   tabline = {},
   extensions = {}
 }
+
 --------------------  nvim-lspinstall SETUP ---------------
 local function setup_servers()
   require'lspinstall'.setup()
@@ -141,7 +151,6 @@ local function setup_servers()
     require'lspconfig'[server].setup{}
   end
 end
-
 setup_servers()
 
 -- Automatically reload after `:LspInstall <server>` so we don't have to restart neovim
