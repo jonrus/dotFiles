@@ -17,27 +17,33 @@ end
 cmd 'packadd paq-nvim'                                  -- load the package manager
 local paq = require('paq-nvim').paq                     -- a convenient alias
 paq {'savq/paq-nvim', opt = true}                       -- paq-nvim manages itself
+paq {'nvim-treesitter/nvim-treesitter'}                 -- Tree Sitter
 paq {'kyazdani42/nvim-web-devicons'}                    -- Icons - others depend on this
 paq {'marko-cerovac/material.nvim'}                     -- Theme with tree sitter support
 paq {'neovim/nvim-lspconfig'}                           -- lsp config
 paq {'nvim-lua/plenary.nvim'}                           -- Helper functions other plugins depend on
 paq {'lewis6991/gitsigns.nvim'}                         -- Adds git info to gutter
 paq {'hrsh7th/nvim-compe'}                              -- Autocomplete
-paq {'nvim-treesitter/nvim-treesitter'}                 -- Tree Sitter
 paq {'kabouzeid/nvim-lspinstall'}                       -- Adds :LspInstall back in
 paq {'norcalli/nvim-colorizer.lua'}                     -- Add color to color codes
 paq {'hoob3rt/lualine.nvim'}                            -- Status line
-paq {'lewis6991/spellsitter.nvim'}                      -- Spell check
+paq {'lewis6991/spellsitter.nvim'}                      -- Spell check [Not WORKING? 05/20/2021]
 paq {'yamatsum/nvim-cursorline'}                        -- Highlights current word and matching words as cursor moves
---paq {'akinsho/nvim-bufferline.lua'}                     -- Adds gui-like tabs
+paq {'akinsho/nvim-bufferline.lua'}                     -- Adds gui-like tabs
 paq {'kyazdani42/nvim-tree.lua'}                        -- File Manager
 paq {'folke/which-key.nvim'}                            -- Displays key commands
+paq {'b3nj5m1n/kommentary'}                             -- selection comments
+paq {'windwp/nvim-ts-autotag'}                          -- Auto pair html like tags
+paq {'windwp/nvim-autopairs'}                           -- Bracket Autopair
+paq {'p00f/nvim-ts-rainbow'}                            -- Color match bracket pairs
+paq {'blackCauldron7/surround.nvim'}                    -- Allows setting/chaing around word
+paq {'rmagatti/auto-session'}                           -- Simple sessions, saves on close, restore on open
 
 --------------------  OPTIONS  ----------------------------
 local indent = 4
 cmd 'colorscheme material'                              -- Set theme
 g.material_style = "darker"                             -- Set version of theme (darker, ligher, oceanic, palenight, deep ocean)
-g.mapleader = " "
+g.mapleader = ";"
 globalOpt.timeoutlen = 800                              -- Key map completion timeout
 globalOpt.completeopt = 'menuone,noinsert,preview'      -- Completion options
 globalOpt.hidden = true                                 -- Enable modified buffers in background
@@ -75,18 +81,50 @@ windowOpt.list = true                                   -- Shows some invisible 
 map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 
+-- Toggle nvim-tree
+map('', '<leader>n', ':NvimTreeToggle<CR>')
+
+-- Tab navigate
+map('n', '<leader>[', ':BufferLineCyclePrev<CR>')
+map('n', '<leader>]', ':BufferLineCycleNext<CR>')
+
+-- Ctrl+S to save
+map('n', '<C-s>', ':w<CR>')
+
+-- Quit vim
+map('n', '<leader>qq', ':qa<CR>')
+
 -------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
-ts.setup {ensure_installed = 'maintained', highlight = {enable = true}}
+ts.setup {
+    ensure_installed = 'maintained',
+    highlight = {enable = true},
+    rainbow = {
+        enable = true,
+        extend_mode = true,
+        max_file_lines = 1000
+    }
+}
 
 --------------------  PLUGIN SETUP  ------------------------
 require'gitsigns'.setup()
 require'colorizer'.setup()
 require'spellsitter'.setup()
 require'which-key'.setup()
+require('kommentary.config').use_extended_mappings()   -- Use gc/gcc to comment
+require('nvim-ts-autotag').setup()
+require('nvim-autopairs').setup()
+require('surround').setup({})
+require('auto-session').setup({pre_save_cmds = {'NvimTreeClose'}, post_save_cmds = {'NvimTreeOpen'}})
 
 --------------------  nvim-bufferline SETUP ----------------
---require'bufferline'.setup{}
+require'bufferline'.setup{}
+
+--------------------  nvim-tree SETUP ----------------
+g.nvim_tree_width = 30
+g.nvim_tree_auto_open = 1
+g.nvim_tree_tab_open = 1
+g.nvim_tree_follow = 1
 
 --------------------  nvim-compue SETUP --------------------
 require('compe').setup {
