@@ -38,6 +38,7 @@ paq {'windwp/nvim-autopairs'}                           -- Bracket Autopair
 paq {'p00f/nvim-ts-rainbow'}                            -- Color match bracket pairs
 paq {'blackCauldron7/surround.nvim'}                    -- Allows setting/chaing around word
 paq {'rmagatti/auto-session'}                           -- Simple sessions, saves on close, restore on open
+paq {'numtostr/FTerm.nvim'}                             -- Terminal popup in neovim
 
 --------------------  OPTIONS  ----------------------------
 local indent = 4
@@ -94,6 +95,9 @@ map('n', '<C-s>', ':w<CR>')
 -- Quit vim
 map('n', '<leader>qq', ':qa<CR>')
 
+-- FTerm Toggle
+map('n', '<leader>t', '<CMD>lua require("FTerm").toggle()<CR>')
+
 -------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
 ts.setup {
@@ -116,6 +120,7 @@ require('nvim-ts-autotag').setup()
 require('nvim-autopairs').setup()
 require('surround').setup({})
 require('auto-session').setup({pre_save_cmds = {'NvimTreeClose'}, post_save_cmds = {'NvimTreeOpen'}})
+require('FTerm').setup()
 
 --------------------  nvim-bufferline SETUP ----------------
 require'bufferline'.setup{}
