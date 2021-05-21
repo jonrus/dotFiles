@@ -40,6 +40,8 @@ paq {'blackCauldron7/surround.nvim'}                    -- Allows setting/chaing
 paq {'rmagatti/auto-session'}                           -- Simple sessions, saves on close, restore on open
 paq {'numtostr/FTerm.nvim'}                             -- Terminal popup in neovim
 paq {'folke/todo-comments.nvim'}                        -- Comment highligher for todo, etc
+paq {'nvim-lua/popup.nvim'}                             -- Popups used by Telescope
+paq {'nvim-telescope/telescope.nvim'}                   -- Nvim Telescope, nuf said
 
 --------------------  OPTIONS  ----------------------------
 local indent = 4
