@@ -39,12 +39,13 @@ paq {'p00f/nvim-ts-rainbow'}                            -- Color match bracket p
 paq {'blackCauldron7/surround.nvim'}                    -- Allows setting/chaing around word
 paq {'rmagatti/auto-session'}                           -- Simple sessions, saves on close, restore on open
 paq {'numtostr/FTerm.nvim'}                             -- Terminal popup in neovim
+paq {'folke/todo-comments.nvim'}                        -- Comment highligher for todo, etc
 
 --------------------  OPTIONS  ----------------------------
 local indent = 4
 cmd 'colorscheme material'                              -- Set theme
 g.material_style = "darker"                             -- Set version of theme (darker, ligher, oceanic, palenight, deep ocean)
-g.mapleader = ";"
+g.mapleader = " "                                       -- Space as Leader
 globalOpt.timeoutlen = 800                              -- Key map completion timeout
 globalOpt.completeopt = 'menuone,noinsert,preview'      -- Completion options
 globalOpt.hidden = true                                 -- Enable modified buffers in background
@@ -126,6 +127,7 @@ require('nvim-autopairs').setup()
 require('surround').setup({})
 require('auto-session').setup({pre_save_cmds = {'NvimTreeClose'}, post_save_cmds = {'NvimTreeOpen'}})
 require('FTerm').setup()
+require('todo-comments').setup()
 
 --------------------  nvim-bufferline SETUP ----------------
 require'bufferline'.setup{}
