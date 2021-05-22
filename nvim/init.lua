@@ -114,7 +114,7 @@ map('n', 'gd', '<cmd>lua require("lspsaga.provider").preview_definition()<CR>')
 map('n', 'gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>')
 map('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>')
 map('n', '<A-i>', '<CMD>lua require("lspsaga.floaterm").open_float_terminal()<CR>')
-map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("lspsaga.floaterm").close_float_terminal()<CR>')
+map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("lspsaga.floaterm").close_float_terminal()<CR><C-w>l')
 
 -------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
