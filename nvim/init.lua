@@ -93,7 +93,7 @@ map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 -- Toggle nvim-tree and focus back to window
 map('', '<leader>n', ':NvimTreeToggle<CR><C-W>w')
 
--- Tab navigate
+-- Tab bufferline navigate
 map('n', '<leader>[', ':BufferLineCyclePrev<CR>')
 map('n', '<leader>]', ':BufferLineCycleNext<CR>')
 
@@ -141,7 +141,11 @@ require('todo-comments').setup()
 require('lspsaga').init_lsp_saga()
 
 --------------------  nvim-bufferline SETUP ----------------
-require'bufferline'.setup{}
+require'bufferline'.setup{
+    options = {
+        offsets = {{filetype = "NvimTree", text = "File Explorer", highlight = "Directory", text_align = "center"}}
+    }
+}
 
 --------------------  nvim-tree SETUP ----------------
 g.nvim_tree_width = 30
