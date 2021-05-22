@@ -92,11 +92,11 @@ map('i', '<S-Tab>', 'pumvisible() ? "\\<C-p>" : "\\<Tab>"', {expr = true})
 map('i', '<Tab>', 'pumvisible() ? "\\<C-n>" : "\\<Tab>"', {expr = true})
 
 -- Toggle nvim-tree and focus back to window
-map('', '<leader>n', ':NvimTreeToggle<CR><C-W>w')
+map('', '<leader>n', ':NvimTreeToggle<CR><C-W>w', {silent = true})
 
 -- Tab bufferline navigate
-map('n', '<leader>[', ':BufferLineCyclePrev<CR>')
-map('n', '<leader>]', ':BufferLineCycleNext<CR>')
+map('n', '<leader>[', ':BufferLineCyclePrev<CR>', {silent = true})
+map('n', '<leader>]', ':BufferLineCycleNext<CR>', {silent = true})
 
 -- Ctrl+S to save
 map('n', '<C-s>', ':w<CR>')
