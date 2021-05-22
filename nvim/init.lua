@@ -38,10 +38,10 @@ paq {'windwp/nvim-autopairs'}                           -- Bracket Autopair
 paq {'p00f/nvim-ts-rainbow'}                            -- Color match bracket pairs
 paq {'blackCauldron7/surround.nvim'}                    -- Allows setting/chaing around word
 paq {'rmagatti/auto-session'}                           -- Simple sessions, saves on close, restore on open
-paq {'numtostr/FTerm.nvim'}                             -- Terminal popup in neovim
 paq {'folke/todo-comments.nvim'}                        -- Comment highligher for todo, etc
 paq {'nvim-lua/popup.nvim'}                             -- Popups used by Telescope
 paq {'nvim-telescope/telescope.nvim'}                   -- Nvim Telescope, nuf said
+paq {'glepnir/lspsaga.nvim'}                            -- Nice interface to LSP info
 
 --------------------  OPTIONS  ----------------------------
 local indent = 4
@@ -103,8 +103,17 @@ map('n', '<C-s>', ':w<CR>')
 -- Quit vim
 map('n', '<leader>qq', ':qa<CR>')
 
--- FTerm Toggle
-map('n', '<leader>t', '<CMD>lua require("FTerm").toggle()<CR>')
+-- LspSaga
+map('n', '<C-f>', '<cmd>lua require("lspsaga.action").smart_scroll_wtih_sage(1)<CR>')
+map('n', '<C-b>', '<cmd>lua require("lspsaga.action").smart_scroll_wtih_sage(-1)<CR>')
+map('n', 'K', '<cmd>lua require("lspsaga.hover").render_hover_doc()<CR>')
+map('n', 'gs', '<cmd>lua require("lspsaga.signaturehelp").signature_help()<CR>')
+map('n', 'gr', '<cmd>lua require("lspsaga.rename").rename()<CR>')
+map('n', 'gd', '<cmd>lua require("lspsaga.provider").preview_definition()<CR>')
+map('n', 'gh', '<cmd>lua require("lspsaga.provider").lsp_finder()<CR>')
+map('n', '<leader>ca', '<cmd>lua require("lspsaga.codeaction").code_action()<CR>')
+map('n', '<A-i>', '<CMD>lua require("lspsaga.floaterm").open_float_terminal()<CR>')
+map('t', '<A-i>', '<C-\\><C-n><CMD>lua require("lspsaga.floaterm").close_float_terminal()<CR>')
 
 -------------------- TREE-SITTER ---------------------------
 local ts = require 'nvim-treesitter.configs'
@@ -127,9 +136,9 @@ require('kommentary.config').use_extended_mappings()   -- Use gc/gcc to comment
 require('nvim-ts-autotag').setup()
 require('nvim-autopairs').setup()
 require('surround').setup({})
-require('auto-session').setup({pre_save_cmds = {'NvimTreeClose'}, post_save_cmds = {'NvimTreeOpen'}})
-require('FTerm').setup()
+require('auto-session').setup({pre_save_cmds = {'tabdo NvimTreeClose'}, post_save_cmds = {'tabdo NvimTreeOpen'}})
 require('todo-comments').setup()
+require('lspsaga').init_lsp_saga()
 
 --------------------  nvim-bufferline SETUP ----------------
 require'bufferline'.setup{}
