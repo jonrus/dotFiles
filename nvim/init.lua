@@ -180,6 +180,8 @@ require('compe').setup {
 }
 
 --------------------  lualine SETUP -----------------------
+--Most of added line stuff comes form evil_lualine
+--https://gist.github.com/hoob3rt/b200435a765ca18f09f83580a606b878
 require'lualine'.setup {
   options = {
     icons_enabled = true,
@@ -191,9 +193,47 @@ require'lualine'.setup {
   sections = {
     lualine_a = {'mode'},
     lualine_b = {'branch'},
-    lualine_c = {'filename'},
+    lualine_c = {
+        {
+            function()
+                local function format_file_size(file)
+                local size = vim.fn.getfsize(file)
+                if size <= 0 then return '' end
+                    local sufixes = {'b', 'k', 'm', 'g'}
+                    local i = 1
+                    while size > 1024 do
+                        size = size / 1024
+                        i = i + 1
+                    end
+                    return string.format('%.1f%s', size, sufixes[i])
+                end
+                local file = vim.fn.expand('%:p')
+                if string.len(file) == 0 then return '' end
+                    return format_file_size(file)
+                end,
+                condition = function() return vim.fn.empty(vim.fn.expand('%:t')) ~= 1 end
+        },
+        'filename',
+        {
+            'diagnostics',
+            sources = {'nvim_lsp'},
+            symbols = {error = ' ', warn = ' ', info = ' '},
+            color_error = "#EC5F67",
+            color_warn = "#ECBE7B",
+            color_info = "#008080"
+        }
+    },
     lualine_x = {'encoding', 'fileformat', 'filetype'},
-    lualine_y = {'progress'},
+    lualine_y = {
+        {
+            'diff',
+            symbols = {added = ' ', modified = '柳 ', removed = ' '},
+            color_added = "#98BE65",
+            color_modified = "#FF8800",
+            color_removed = "#EC5F67",
+            condition = function() return vim.fn.winwidth(0) > 80 end
+        },
+        'progress'},
     lualine_z = {'location'}
   },
   inactive_sections = {
@@ -205,7 +245,7 @@ require'lualine'.setup {
     lualine_z = {}
   },
   tabline = {},
-  extensions = {}
+  extensions = {'nvim-tree'}
 }
 
 --------------------  nvim-lspinstall SETUP ---------------
