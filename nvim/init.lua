@@ -14,34 +14,35 @@ local function map(mode, lhs, rhs, opts)
 end
 
 -------------------- PLUGINS -------------------------------
-cmd 'packadd paq-nvim'                                  -- load the package manager
-local paq = require('paq-nvim').paq                     -- a convenient alias
-paq {'savq/paq-nvim', opt = true}                       -- paq-nvim manages itself
-paq {'nvim-treesitter/nvim-treesitter'}                 -- Tree Sitter
-paq {'kyazdani42/nvim-web-devicons'}                    -- Icons - others depend on this
-paq {'marko-cerovac/material.nvim'}                     -- Theme with tree sitter support
-paq {'neovim/nvim-lspconfig'}                           -- lsp config
-paq {'nvim-lua/plenary.nvim'}                           -- Helper functions other plugins depend on
-paq {'lewis6991/gitsigns.nvim'}                         -- Adds git info to gutter
-paq {'hrsh7th/nvim-compe'}                              -- Autocomplete
-paq {'kabouzeid/nvim-lspinstall'}                       -- Adds :LspInstall back in
-paq {'norcalli/nvim-colorizer.lua'}                     -- Add color to color codes
-paq {'hoob3rt/lualine.nvim'}                            -- Status line
-paq {'lewis6991/spellsitter.nvim'}                      -- Spell check [Not WORKING? 05/20/2021]
-paq {'yamatsum/nvim-cursorline'}                        -- Highlights current word and matching words as cursor moves
-paq {'akinsho/nvim-bufferline.lua'}                     -- Adds gui-like tabs
-paq {'kyazdani42/nvim-tree.lua'}                        -- File Manager
-paq {'folke/which-key.nvim'}                            -- Displays key commands
-paq {'b3nj5m1n/kommentary'}                             -- selection comments
-paq {'windwp/nvim-ts-autotag'}                          -- Auto pair html like tags
-paq {'windwp/nvim-autopairs'}                           -- Bracket Autopair
-paq {'p00f/nvim-ts-rainbow'}                            -- Color match bracket pairs
-paq {'blackCauldron7/surround.nvim'}                    -- Allows setting/chaing around word
-paq {'rmagatti/auto-session'}                           -- Simple sessions, saves on close, restore on open
-paq {'folke/todo-comments.nvim'}                        -- Comment highligher for todo, etc
-paq {'nvim-lua/popup.nvim'}                             -- Popups used by Telescope
-paq {'nvim-telescope/telescope.nvim'}                   -- Nvim Telescope, nuf said
-paq {'glepnir/lspsaga.nvim'}                            -- Nice interface to LSP info
+cmd 'packadd paq-nvim'                                              -- load the package manager
+local paq = require('paq-nvim').paq                                 -- a convenient alias
+paq {'savq/paq-nvim', opt = true}                                   -- paq-nvim manages itself
+paq {'nvim-treesitter/nvim-treesitter'}                             -- Tree Sitter
+paq {'kyazdani42/nvim-web-devicons'}                                -- Icons - others depend on this
+paq {'marko-cerovac/material.nvim'}                                 -- Theme with tree sitter support
+paq {'neovim/nvim-lspconfig'}                                       -- lsp config
+paq {'nvim-lua/plenary.nvim'}                                       -- Helper functions other plugins depend on
+paq {'lewis6991/gitsigns.nvim'}                                     -- Adds git info to gutter
+paq {'hrsh7th/nvim-compe'}                                          -- Autocomplete
+paq {'kabouzeid/nvim-lspinstall'}                                   -- Adds :LspInstall back in
+paq {'norcalli/nvim-colorizer.lua'}                                 -- Add color to color codes
+paq {'hoob3rt/lualine.nvim'}                                        -- Status line
+paq {'lewis6991/spellsitter.nvim'}                                  -- Spell check [Not WORKING? 05/20/2021]
+paq {'yamatsum/nvim-cursorline'}                                    -- Highlights current word and matching words as cursor moves
+paq {'akinsho/nvim-bufferline.lua'}                                 -- Adds gui-like tabs
+paq {'kyazdani42/nvim-tree.lua'}                                    -- File Manager
+paq {'folke/which-key.nvim'}                                        -- Displays key commands
+paq {'b3nj5m1n/kommentary'}                                         -- selection comments
+paq {'windwp/nvim-ts-autotag'}                                      -- Auto pair html like tags
+paq {'windwp/nvim-autopairs'}                                       -- Bracket Autopair
+paq {'p00f/nvim-ts-rainbow'}                                        -- Color match bracket pairs
+paq {'blackCauldron7/surround.nvim'}                                -- Allows setting/chaing around word
+paq {'rmagatti/auto-session'}                                       -- Simple sessions, saves on close, restore on open
+paq {'folke/todo-comments.nvim'}                                    -- Comment highligher for todo, etc
+paq {'nvim-lua/popup.nvim'}                                         -- Popups used by Telescope
+paq {'nvim-telescope/telescope.nvim'}                               -- Nvim Telescope, nuf said
+paq {'glepnir/lspsaga.nvim'}                                        -- Nice interface to LSP info
+paq {'lukas-reineke/indent-blankline.nvim', branch = 'lua'}         -- Visual indent marking
 
 --------------------  OPTIONS  ----------------------------
 local indent = 4
@@ -136,7 +137,7 @@ require('kommentary.config').use_extended_mappings()   -- Use gc/gcc to comment
 require('nvim-ts-autotag').setup()
 require('nvim-autopairs').setup()
 require('surround').setup({})
-require('auto-session').setup({pre_save_cmds = {'tabdo NvimTreeClose'}, post_save_cmds = {'tabdo NvimTreeOpen'}})
+require('auto-session').setup({pre_save_cmds = {'tabdo NvimTreeClose'}, post_restore_cmds = {'tabdo NvimTreeOpen'}})
 require('todo-comments').setup()
 require('lspsaga').init_lsp_saga()
 
