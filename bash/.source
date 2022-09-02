@@ -1,3 +1,4 @@
+source ~/Projects/dotFiles/bash/.asdf
 source ~/Projects/dotFiles/bash/.functions
 source ~/Projects/dotFiles/bash/.aliases
 source ~/Projects/dotFiles/bash/.git_prompt
