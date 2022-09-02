@@ -12,7 +12,7 @@ alias gd='git diff'
 alias gp='git pull -p'
 
 # LS
-alias ls='ls -AChp --color=auto'
+alias ls='ls -A -F -G --color=auto'
 
 # Bat for cat
 alias cat='bat'
