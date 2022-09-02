@@ -1,0 +1,21 @@
+# File Nav
+alias ..='cd ..'
+alias ...='cd ...'
+alias ....='cd ....'
+alias projects='cd ~/Projects'
+
+# Git
+alias g='git'
+alias gs='git status'
+alias gl='git log'
+alias gd='git diff'
+alias gp='git pull -p'
+
+# LS
+alias ls='ls -AChp --color=auto'
+
+# Bat for cat
+alias cat='bat'
+
+# NeoVim is best vim
+alias v='nvim'
