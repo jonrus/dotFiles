@@ -19,3 +19,6 @@ alias cat='bat'
 
 # NeoVim is best vim
 alias v='nvim'
+
+# Kitty kittens
+alias kssh='kitty +kitten ssh'
