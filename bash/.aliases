@@ -15,7 +15,8 @@ alias gp='git pull -p'
 alias ls='ls -A -F -G --color=auto'
 
 # Bat for cat
-alias cat='bat'
+# Disable this for now
+#alias cat='bat'
 
 # NeoVim is best vim
 alias v='nvim'

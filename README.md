@@ -8,12 +8,17 @@ My config files for various apps.
    - [Starship](https://github.com/starship/starship)
    - [asdf](https://asdf-vm.com/)
 
-## Install
+## Full Install
    - Install Kitty (if using...)
    - Install Starship
    - Install Hack Nerd Font
    - Install asdf
    - Install neovim
    - Clone this repo
-   - Add `source .../dotFiles/bash/.source` to `.bashrc`
+   - Add `source .../dotFiles/bash/.source_all` to `.bashrc`
    - Create symlink of `.../dotFiles/starship/pure-preset.tom` to `~/.config/starship.toml`
+
+## Minimum Install (On [Kinoite](https://kinoite.fedoraproject.org/) for example)
+   - Install Hack Nerd Font
+   - Clone this repo
+   - Add `source .../dotFiles/bash/.source_minimum` to `.bashrc`
