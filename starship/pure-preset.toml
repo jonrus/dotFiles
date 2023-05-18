@@ -44,3 +44,18 @@ style = "yellow"
 [python]
 format = "[$virtualenv]($style) "
 style = "bright-black"
+
+# Show the active user's username.
+[username]
+#style_user = 'cyan bold'
+#style_root = 'black bold'
+format = '[$user](bold fg:14)[@]'
+disabled = false
+show_always = false
+
+# Show the host name
+[hostname]
+ssh_only = false
+format = '[$hostname](green)[:](bold white) '
+trim_at = '.' 
+disabled = false
