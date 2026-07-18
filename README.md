@@ -7,6 +7,7 @@ My config files for various apps.
    - [Hack Nerd Font](https://www.nerdfonts.com/font-downloads)
    - [Starship](https://github.com/starship/starship)
    - [asdf](https://asdf-vm.com/)
+   - [Claude Code](https://claude.com/claude-code) personal skills
 
 ## Full Install
    - Install Kitty (if using...)
@@ -17,12 +18,14 @@ My config files for various apps.
    - Clone this repo
    - Add `source .../dotFiles/bash/.source_all` to `.bashrc`
    - Create symlink of `.../dotFiles/starship/pure-preset.toml` to `~/.config/starship.toml`
+   - Create symlink of `.../dotFiles/claude-skills` to `~/.claude/skills`
 
 ## No asdf Install
    - Install Hack Nerd Font
    - Clone this repo
    - Add `source .../dotFiles/bash/.source_no_asdf` to `.bashrc`
    - Create symlink of `.../dotFiles/starship/pure-preset.toml` to `~/.config/starship.toml`
+   - Create symlink of `.../dotFiles/claude-skills` to `~/.claude/skills`
 
 ## Minimum Install (On [Kinoite](https://kinoite.fedoraproject.org/) for example)
    - Install Hack Nerd Font
@@ -30,3 +33,4 @@ My config files for various apps.
      - Place binary in PATH 
    - Clone this repo
    - Add `source .../dotFiles/bash/.source_minimum` to `.bashrc`
+   - Create symlink of `.../dotFiles/claude-skills` to `~/.claude/skills`
