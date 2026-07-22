@@ -7,13 +7,13 @@ disable-model-invocation: true
 # Spec → Tasks
 
 Turns a spec at `docs/specs/<name>.md` into an execution checklist at
-`docs/specs/tasks/<name>.md`. The task file **is version-controlled** while its spec is
-`in-progress` (confirm `docs/specs/tasks/` is *not* gitignored; remove any blanket ignore
-entry for it if one exists) — committing it is what makes it possible to resume work from
-a different machine, not just a different session. It's still a disposable document in the
-long run: `/work-task` deletes it once the spec reaches `implemented` (leaving the commit
-of that deletion to the user), at which point the spec is the durable record, not the
-checklist.
+`docs/specs/tasks/<name>.md`. The task file **is version-controlled** (confirm
+`docs/specs/tasks/` is *not* gitignored; remove any blanket ignore entry for it if one
+exists) — committing it is what makes it possible to resume work from a different machine,
+not just a different session. It stays in the repo permanently, even after the spec reaches
+`implemented`: the spec is the durable record of *what* and *why*, but the task file is
+kept as a record of how the work was broken down and sequenced, which can be useful source
+material later (e.g. for documentation).
 
 ## Critical constraint: each step must be independently executable
 

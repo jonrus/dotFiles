@@ -24,10 +24,9 @@ looks quick.
 4. **Execute only that step** — read the relevant code first, make the change, and verify
    it (run tests/typecheck/the app as appropriate — don't just claim success).
 5. **Check it off** (`- [ ]` → `- [x]`) in the task file once verified.
-6. **If that was the last step:** set the spec's frontmatter to `status: implemented` and
-   delete the task file (it's version-controlled while `in-progress` specifically so work
-   can resume across machines — once implemented, the spec is the durable record and the
-   checklist has served its purpose). Tell the user it's gone and ready to be committed
-   along with the rest of the changes — don't commit it yourself, that's still their call.
+6. **If that was the last step:** set the spec's frontmatter to `status: implemented`. Keep
+   the task file — it stays in `docs/specs/tasks/` as a record even after completion (it
+   can be useful source material for documentation later). Tell the user the spec is fully
+   implemented and ready to be committed along with the rest of the changes.
 7. **Stop.** Summarize what changed and note that the next step is ready to be picked up in
    a fresh session — don't proceed further in this one.
