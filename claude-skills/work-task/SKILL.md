@@ -23,10 +23,15 @@ looks quick.
    starting, so the user can redirect if it's not what they expected.
 4. **Execute only that step** — read the relevant code first, make the change, and verify
    it (run tests/typecheck/the app as appropriate — don't just claim success).
-5. **Check it off** (`- [ ]` → `- [x]`) in the task file once verified.
-6. **If that was the last step:** set the spec's frontmatter to `status: implemented`. Keep
+5. **If the step resolved or confirmed something the spec left open** (an Open Questions
+   entry, an unverified assumption, a "verify at implementation time" note), update the
+   spec to record that — following the existing pattern in the spec of a strike-through/
+   confirmation note near the relevant Design section plus a matching update in Open
+   Questions. Do this before checking off the task step.
+6. **Check it off** (`- [ ]` → `- [x]`) in the task file once verified.
+7. **If that was the last step:** set the spec's frontmatter to `status: implemented`. Keep
    the task file — it stays in `docs/specs/tasks/` as a record even after completion (it
    can be useful source material for documentation later). Tell the user the spec is fully
    implemented and ready to be committed along with the rest of the changes.
-7. **Stop.** Summarize what changed and note that the next step is ready to be picked up in
+8. **Stop.** Summarize what changed and note that the next step is ready to be picked up in
    a fresh session — don't proceed further in this one.
