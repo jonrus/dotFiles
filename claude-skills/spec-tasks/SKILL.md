@@ -44,8 +44,15 @@ a cold session can execute it correctly without needing to ask anything first.
    - [ ] 2. ...
    ```
 
-5. Update the spec's frontmatter to `status: in-progress`.
-6. Tell the user the task file is ready and that each `- [ ]` item is meant to be run via
+5. Do a quick review pass of the written task file against the spec — a different failure
+   mode than a spec-level red-team pass (which checks the *design*), this checks the
+   *decomposition*: dropped details, ordering/dependency mistakes (e.g. a step that wires
+   something to a placeholder only for a later step to replace it — reorder instead so
+   the dependency is built first), and steps that aren't self-contained enough for a cold
+   `/work-task` session to execute without asking a question first. Fix anything found
+   directly in the task file before moving on.
+6. Update the spec's frontmatter to `status: in-progress`.
+7. Tell the user the task file is ready and that each `- [ ]` item is meant to be run via
    `/work-task` in its own fresh session.
 
 If a task file for this spec already exists and has any `- [x]` items checked, do not
