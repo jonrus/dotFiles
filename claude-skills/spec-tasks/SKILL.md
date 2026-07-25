@@ -49,8 +49,15 @@ a cold session can execute it correctly without needing to ask anything first.
    *decomposition*: dropped details, ordering/dependency mistakes (e.g. a step that wires
    something to a placeholder only for a later step to replace it — reorder instead so
    the dependency is built first), and steps that aren't self-contained enough for a cold
-   `/work-task` session to execute without asking a question first. Fix anything found
-   directly in the task file before moving on.
+   `/work-task` session to execute without asking a question first. Fix pure decomposition
+   issues directly in the task file. But if this pass surfaces something that's actually a
+   gap in the *spec's own content* — e.g. a Design-section fix with no corresponding
+   Testing-section requirement, or a Scope item the Design section never actually
+   addresses — fold that back into the spec too (with its own short retrospective note,
+   same convention as a red-team pass), not just the task file: the task file is only a
+   record of how the work was broken down, but the spec is the durable "what and why," and
+   a content gap that lives only in the task file is invisible to anyone who reads the spec
+   alone.
 6. Update the spec's frontmatter to `status: in-progress`.
 7. Tell the user the task file is ready and that each `- [ ]` item is meant to be run via
    `/work-task` in its own fresh session.

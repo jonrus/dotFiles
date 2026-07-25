@@ -67,5 +67,19 @@ another (`/work-task`). Do not skip ahead to tasks or code in this skill.
    content. The product doc should stay stable and rarely change; specs are where detail
    and iteration live.
 
-6. **Stop here.** Don't generate a task file and don't start writing code — hand off to
+6. **Red-team the draft before finalizing.** A spec written under your own reasoning is
+   prone to the blind spots that reasoning has — review it with fresh eyes before treating
+   it as final. Prefer an independent pass with no memory of the drafting conversation
+   (e.g. spawn a subagent) over reviewing it yourself, since anchoring on your own
+   just-written reasoning is exactly what a red-team pass exists to counteract. Run at
+   least one pass; run a second if the first pass finds anything substantive — a second
+   pass finding nothing is a good stopping signal, while a second pass catching a real bug
+   the first missed (including a bug in the first pass's own fixes) means the risk was
+   real. Once passes stop finding new issues, a narrower, cheaper check scoped only to the
+   code touched by the most recent round's fixes is a reasonable substitute for a further
+   full pass. Fix every finding directly in the spec, and record a short retrospective in
+   Open Questions — what each pass caught and how it was fixed — so a future reader isn't
+   left reconstructing spec history from git log.
+
+7. **Stop here.** Don't generate a task file and don't start writing code — hand off to
    `/spec-tasks` for that.
