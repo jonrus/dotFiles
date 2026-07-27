@@ -11,6 +11,22 @@ versioned single source of truth for a scoped piece of work. This skill only wri
 **spec** — task breakdown is a separate step (`/spec-tasks`), and per-step execution is
 another (`/work-task`). Do not skip ahead to tasks or code in this skill.
 
+## Optional input: a refined feature file
+
+If the user points you at a `docs/features/NNN-slug.md` file (typically one already taken
+through `/new-feature` and marked `status: refined`), read it in full and use its `Firm
+Scope`/`Nice-to-have Scope`/`Explicitly Out of Scope`/`Resolved Decisions` as the starting
+point for Step 2 below instead of interviewing from scratch — that conversation already
+happened and was written down; don't re-derive it, just confirm it's still accurate against
+the current codebase and fill any gaps. If something in it turns out wrong or incomplete
+once checked against the current code, don't silently override the feature file to fix
+it — the spec is about to become the actual source of truth, so the correction (and its
+reasoning) belongs in the spec's own Design section like any other decision made while
+writing it, surfaced to the user in conversation same as any other open question. See Step
+7 for what happens to the feature file itself once the spec is done. If no feature file is
+mentioned, proceed exactly as this skill always has — a feature file is never required, and
+this skill's default behavior (interview the user directly) is unchanged.
+
 ## Steps
 
 1. **Orient.** Check for `docs/specs/` — if it doesn't exist yet, this is the first spec in
@@ -21,15 +37,18 @@ another (`/work-task`). Do not skip ahead to tasks or code in this skill.
    higher-level source of truth this spec must stay consistent with.
 
 2. **Scope the conversation, don't just transcribe it.** Ask the user what problem or
-   feature this spec covers. Push back like a lightweight red-team pass: surface edge
+   feature this spec covers (or, per the "Optional input" section above, start from the
+   feature file if one was given). Push back like a lightweight red-team pass: surface edge
    cases, ask about interactions with existing specs/features, and don't write anything
    down until the what/why/how are actually settled — a spec transcribed from a vague ask
    is worse than no spec at all.
 
 3. **Name the file.** Convention: `docs/specs/NNN-kebab-case-title.md`, where `NNN` is a
    zero-padded sequence number one higher than the highest existing spec (start at `001`
-   if none exist). Confirm the title with the user if it isn't obvious from the
-   conversation.
+   if none exist) — independent of any source feature file's own number (see CLAUDE.md:
+   `docs/features/` and `docs/specs/` are numbered separately). If working from a feature
+   file, reuse its slug for `kebab-case-title` rather than inventing a new one; otherwise
+   confirm the title with the user if it isn't obvious from the conversation.
 
 4. **Write the spec** with this frontmatter and shape:
 
@@ -81,5 +100,18 @@ another (`/work-task`). Do not skip ahead to tasks or code in this skill.
    Open Questions — what each pass caught and how it was fixed — so a future reader isn't
    left reconstructing spec history from git log.
 
-7. **Stop here.** Don't generate a task file and don't start writing code — hand off to
+7. **If this spec was created from a feature file**, update that file's frontmatter to
+   `status: promoted` and add a `promoted_to: docs/specs/NNN-kebab-case-title.md` field
+   pointing at the new spec. Keep the feature file in the repo permanently — like a
+   spec-tasks task file, it stays as a record of how the ask was originally framed and
+   refined, even though the spec now supersedes it as the source of truth. If anything in
+   the feature file's `Resolved Decisions` ended up superseded or corrected while writing
+   the spec (per Step 2), don't rewrite those entries to match — append a short pointer
+   note next to each one instead (e.g. "Superseded during spec writing — see
+   docs/specs/NNN-slug.md's Design section for the corrected decision"), the same
+   append-don't-rewrite convention this project's specs already use for
+   discovered-during-implementation corrections. This keeps the feature file's own history
+   intact while stopping a future reader from trusting a stale claim in isolation.
+
+8. **Stop here.** Don't generate a task file and don't start writing code — hand off to
    `/spec-tasks` for that.
