@@ -28,10 +28,16 @@ This skill edits the **feature file** (`docs/features/NNN-slug.md`) — never an
 1. **Find the feature file.** If given a path, use it. Otherwise look in `docs/features/`
    for files with `status: draft` (excluding `000-feature_template.md`, which is never a
    real feature) — if there's exactly one, use it; if several, ask which one. If none
-   exist, tell the user to copy `docs/features/000-feature_template.md` to
-   `docs/features/NNN-slug.md` (next number after the highest existing one) and fill in
-   what they can before running this skill — don't fabricate the initial draft yourself;
-   the whole point is that the user frames the ask first.
+   exist and the invocation is just "run `/new-feature`" with no other context, tell the
+   user to copy `docs/features/000-feature_template.md` to `docs/features/NNN-slug.md`
+   (next number after the highest existing one) and fill in what they can before running
+   this skill — don't fabricate the initial draft yourself; the whole point is that the
+   user frames the ask first. But if the user explicitly hands off substantial
+   conversational context instead (e.g. "let's `/new-feature` this with what we've already
+   discussed"), that context *is* the user framing the ask — create
+   `docs/features/NNN-slug.md` yourself, transcribing what was actually established in
+   conversation into the template's sections. The line not to cross is inventing scope
+   that was never said, not writing the file on the user's behalf.
 
 2. **Read the feature file in full**, including any `Related Specs / Code` pointers and
    existing `Open Questions` it already lists — those are a head start, not a substitute
@@ -77,12 +83,21 @@ This skill edits the **feature file** (`docs/features/NNN-slug.md`) — never an
    and add it to the current file's `Explicitly Out of Scope` section rather than letting
    scope quietly grow.
 
+   This also happens in a quieter form: the user answers a question in step 4 not by
+   picking an option but by asking a clarifying question back, or by stating a new
+   constraint that reshapes the question itself (e.g. asking what a design choice looks
+   like under a deployment topology you hadn't scoped for, or adding a requirement like
+   "make sure this supports N of these, not just one" mid-batch). Treat that the same way:
+   don't route around it to force an answer to the original framing. Pause, research the
+   new input, update the feature file's Related Specs/Code or Resolved Decisions with what
+   it changes, and re-ask a revised batch that reflects the new shape of the question.
+
 7. **Do at least one unprompted "what am I missing" pass yourself** before declaring the
    scope done — don't wait for the user to ask "any concerns?". Re-read the resolved scope
-   against the research from step 3, looking for one more real interaction the questions so
-   far didn't cover (e.g. how a new feature interacts with an existing filter/parameter, or
-   an existing view's edge case). If nothing turns up, say so briefly rather than padding
-   with a question for its own sake.
+   against the research from step 3, looking for any further real interactions the
+   questions so far didn't cover (e.g. how a new feature interacts with an existing
+   filter/parameter, or an existing view's edge case) — there may be more than one. If
+   nothing turns up, say so briefly rather than padding with a question for its own sake.
 
 8. **Finalize.** Once there's nothing left to ask, give a complete summary of the feature
    file's current state (Firm Scope, Nice-to-have, Explicitly Out, and the resolved
