@@ -57,6 +57,18 @@ cold session can execute it without asking anything first.
    - [ ] 2. ...
    ```
 
+   Tag steps that an unattended run must not do on its own, right after the checkbox:
+   - `[user]` — needs a human: a live browser check, a command needing an interactive TTY,
+     credentials, or a judgment call. The step text must say exactly what the user does and
+     what to look for, with full paths, URLs and exact commands rather than relative
+     references.
+   - `[push]` — pushes the branch or opens a PR (the project's `CLAUDE.md` may require
+     confirmation first).
+
+   Example: `- [ ] 9. [user] Check the badge in a browser — done when: ...`. Untagged steps
+   are assumed safe for an agent to run start to finish. `/work-loop` stops at tagged
+   steps.
+
 5. **Review the written task file against the spec.** This checks the *decomposition*, a
    different failure mode from a spec-level red-team pass, which checks the *design*. Look
    for:

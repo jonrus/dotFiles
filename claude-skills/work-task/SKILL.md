@@ -31,6 +31,9 @@ points, `CLAUDE.md` wins.
    check-off. Don't execute anything. Verify the spec's work is actually complete, then
    set the spec's `status: implemented` if it isn't already, commit that change, and tell
    the user.
+   If the step is tagged `[user]`, don't try to do it yourself. Tell the user exactly what
+   to do and what to look for, then wait for their report before checking it off. A
+   `[push]` step follows `CLAUDE.md`'s push rules (ask first if it says so).
 4. **Execute only that step** — read the relevant code first, make the change, and verify
    it (run tests/typecheck/the app as appropriate — don't just claim success).
 5. **If the step resolved or confirmed something the spec left open** (an Open Questions
