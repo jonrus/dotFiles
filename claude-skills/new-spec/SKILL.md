@@ -8,47 +8,49 @@ disable-model-invocation: true
 
 Follow this project's Spec-Driven Development pattern: `docs/specs/*.md` are the committed,
 versioned single source of truth for a scoped piece of work. This skill only writes the
-**spec** — task breakdown is a separate step (`/spec-tasks`), and per-step execution is
-another (`/work-task`). Do not skip ahead to tasks or code in this skill.
+**spec**. Task breakdown is `/spec-tasks` and per-step execution is `/work-task`; don't
+skip ahead to tasks or code here.
+
+Follow the project's `CLAUDE.md` for branch creation, slug conventions (including checking
+the slug isn't already in use), numbering, and how to run commands.
+
+Spec status lifecycle: `draft` (this skill) → `in-progress` (set by `/spec-tasks`) →
+`implemented` (set by `/work-task` on the last step). Don't set the latter two here.
 
 ## Optional input: a refined feature file
 
-If the user points you at a `docs/features/NNN-slug.md` file (typically one already taken
-through `/new-feature` and marked `status: refined`), read it in full and use its `Firm
-Scope`/`Nice-to-have Scope`/`Explicitly Out of Scope`/`Resolved Decisions` as the starting
-point for Step 2 below instead of interviewing from scratch — that conversation already
-happened and was written down; don't re-derive it, just confirm it's still accurate against
-the current codebase and fill any gaps. If something in it turns out wrong or incomplete
-once checked against the current code, don't silently override the feature file to fix
-it — the spec is about to become the actual source of truth, so the correction (and its
-reasoning) belongs in the spec's own Design section like any other decision made while
-writing it, surfaced to the user in conversation same as any other open question. See Step
-7 for what happens to the feature file itself once the spec is done. If no feature file is
-mentioned, proceed exactly as this skill always has — a feature file is never required, and
-this skill's default behavior (interview the user directly) is unchanged.
+If the user points you at a `docs/features/NNN-slug.md` (normally one `/new-feature` has
+marked `status: refined`), read it in full. Use its `Firm Scope`, `Nice-to-have Scope`,
+`Explicitly Out of Scope` and `Resolved Decisions` as the starting point for step 2 instead
+of interviewing from scratch. That conversation already happened; don't re-derive it.
+Confirm it still holds against the current codebase and fill any gaps.
+
+If something in the feature file turns out wrong or incomplete, don't edit it to fix that.
+The spec is the source of truth, so put the correction and its reasoning in the spec's
+Design section, and raise it with the user like any other open question. Step 7 covers what
+happens to the feature file afterwards.
+
+With no feature file, interview the user directly. A feature file is never required.
 
 ## Steps
 
-1. **Orient.** Check for `docs/specs/` — if it doesn't exist yet, this is the first spec in
-   the project; create the directory and confirm the naming convention below with the user
-   rather than assuming. Read any existing files directly in `docs/specs/` (not
-   `docs/specs/tasks/`) to avoid contradicting or duplicating a prior decision. If a
-   top-level product doc exists (e.g. `docs/app_idea.md`), read it fully — it's the
-   higher-level source of truth this spec must stay consistent with.
+1. **Orient.** Check for `docs/specs/`. If it doesn't exist, this is the project's first
+   spec: create it and confirm the naming convention below with the user rather than
+   assuming. Read the existing files directly in `docs/specs/` (not `docs/specs/tasks/`) so
+   you don't contradict or duplicate a prior decision. If a top-level product doc exists
+   (e.g. `docs/app_idea.md`), read it fully; the spec must stay consistent with it.
 
-2. **Scope the conversation, don't just transcribe it.** Ask the user what problem or
-   feature this spec covers (or, per the "Optional input" section above, start from the
-   feature file if one was given). Push back like a lightweight red-team pass: surface edge
-   cases, ask about interactions with existing specs/features, and don't write anything
-   down until the what/why/how are actually settled — a spec transcribed from a vague ask
-   is worse than no spec at all.
+2. **Scope the conversation, don't just transcribe it.** Ask what problem or feature this
+   spec covers (or start from the feature file). Push back like a lightweight red-team
+   pass: surface edge cases and interactions with existing specs and features. Write
+   nothing down until the what, why and how are settled — a spec transcribed from a vague
+   ask is worse than none.
 
-3. **Name the file.** Convention: `docs/specs/NNN-kebab-case-title.md`, where `NNN` is a
-   zero-padded sequence number one higher than the highest existing spec (start at `001`
-   if none exist) — independent of any source feature file's own number (see CLAUDE.md:
-   `docs/features/` and `docs/specs/` are numbered separately). If working from a feature
-   file, reuse its slug for `kebab-case-title` rather than inventing a new one; otherwise
-   confirm the title with the user if it isn't obvious from the conversation.
+3. **Name the file.** `docs/specs/NNN-kebab-case-title.md`, where `NNN` is zero-padded and
+   one higher than the highest existing spec (`001` if none). It's independent of any
+   source feature file's number — `docs/features/` and `docs/specs/` are numbered
+   separately. From a feature file, reuse its slug for the title; otherwise confirm the
+   title with the user if it isn't obvious.
 
 4. **Write the spec** with this frontmatter and shape:
 
@@ -75,43 +77,34 @@ this skill's default behavior (interview the user directly) is unchanged.
    Anything genuinely unresolved, or "None" once settled.
    ```
 
-   `status` starts as `draft`. It becomes `in-progress` when `/spec-tasks` generates a task
-   file, and `implemented` when `/work-task` finishes the last step — don't set those
-   yourself in this skill.
-
 5. **Cross-reference the product doc, don't duplicate into it.** If this spec refines or
-   supersedes something stated in the top-level product doc (e.g. `docs/app_idea.md`), make
-   a small targeted edit there — a sentence or inline pointer like
-   `(refined in docs/specs/003-ignore-rules-v2.md)` — rather than rewriting that doc's
-   content. The product doc should stay stable and rarely change; specs are where detail
-   and iteration live.
+   supersedes something in the top-level product doc, make a small targeted edit there — a
+   sentence or inline pointer like `(refined in docs/specs/003-ignore-rules-v2.md)` —
+   rather than rewriting its content. The product doc stays stable; specs hold the detail
+   and iteration.
 
-6. **Red-team the draft before finalizing.** A spec written under your own reasoning is
-   prone to the blind spots that reasoning has — review it with fresh eyes before treating
-   it as final. Prefer an independent pass with no memory of the drafting conversation
-   (e.g. spawn a subagent) over reviewing it yourself, since anchoring on your own
-   just-written reasoning is exactly what a red-team pass exists to counteract. Run at
-   least one pass; run a second if the first pass finds anything substantive — a second
-   pass finding nothing is a good stopping signal, while a second pass catching a real bug
-   the first missed (including a bug in the first pass's own fixes) means the risk was
-   real. Once passes stop finding new issues, a narrower, cheaper check scoped only to the
-   code touched by the most recent round's fixes is a reasonable substitute for a further
-   full pass. Fix every finding directly in the spec, and record a short retrospective in
-   Open Questions — what each pass caught and how it was fixed — so a future reader isn't
-   left reconstructing spec history from git log.
+6. **Red-team the draft before finalizing.** Your own reasoning has blind spots, so review
+   with fresh eyes: prefer an independent pass with no memory of the drafting conversation
+   (e.g. a subagent) over reviewing it yourself.
+   - Run at least one pass. Run another if a pass finds anything substantive.
+   - A pass that finds nothing is a good stopping signal. A second pass that catches a
+     real bug the first missed (including one in the first pass's own fixes) means the
+     risk was real, so keep going.
+   - Once passes stop finding things, a narrower check scoped to the code touched by the
+     latest round of fixes can replace a further full pass.
+   - Fix every finding directly in the spec, and record a short retrospective in Open
+     Questions — what each pass caught and how it was fixed — so a future reader doesn't
+     have to reconstruct the history from git log.
 
-7. **If this spec was created from a feature file**, update that file's frontmatter to
-   `status: promoted` and add a `promoted_to: docs/specs/NNN-kebab-case-title.md` field
-   pointing at the new spec. Keep the feature file in the repo permanently — like a
-   spec-tasks task file, it stays as a record of how the ask was originally framed and
-   refined, even though the spec now supersedes it as the source of truth. If anything in
-   the feature file's `Resolved Decisions` ended up superseded or corrected while writing
-   the spec (per Step 2), don't rewrite those entries to match — append a short pointer
-   note next to each one instead (e.g. "Superseded during spec writing — see
-   docs/specs/NNN-slug.md's Design section for the corrected decision"), the same
-   append-don't-rewrite convention this project's specs already use for
-   discovered-during-implementation corrections. This keeps the feature file's own history
-   intact while stopping a future reader from trusting a stale claim in isolation.
+7. **If the spec came from a feature file**, update that file's frontmatter to
+   `status: promoted` and add `promoted_to: docs/specs/NNN-kebab-case-title.md`. Keep the
+   feature file in the repo permanently as a record of how the ask was framed and refined.
 
-8. **Stop here.** Don't generate a task file and don't start writing code — hand off to
-   `/spec-tasks` for that.
+   For any `Resolved Decisions` entry that was superseded or corrected while writing the
+   spec (per the Optional input section), don't rewrite it. Append a short pointer beside
+   it, e.g. "Superseded during spec writing — see docs/specs/NNN-slug.md's Design section
+   for the corrected decision". This is the same append-don't-rewrite convention specs
+   use for corrections found during implementation, and it stops a future reader trusting
+   a stale claim in isolation.
+
+8. **Stop here.** Don't generate a task file or write code; hand off to `/spec-tasks`.

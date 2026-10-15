@@ -7,33 +7,45 @@ disable-model-invocation: true
 # Spec → Tasks
 
 Turns a spec at `docs/specs/<name>.md` into an execution checklist at
-`docs/specs/tasks/<name>.md`. The task file **is version-controlled** (confirm
-`docs/specs/tasks/` is *not* gitignored; remove any blanket ignore entry for it if one
-exists) — committing it is what makes it possible to resume work from a different machine,
-not just a different session. It stays in the repo permanently, even after the spec reaches
-`implemented`: the spec is the durable record of *what* and *why*, but the task file is
-kept as a record of how the work was broken down and sequenced, which can be useful source
-material later (e.g. for documentation).
+`docs/specs/tasks/<name>.md`. The task file is **version-controlled**, which is what lets
+work resume from a different machine, not just a different session. It stays in the repo
+permanently, even after the spec reaches `implemented`: the spec is the durable record of
+*what* and *why*, and the task file records how the work was broken down and sequenced,
+which is useful source material later (e.g. for documentation).
+
+Follow the project's `CLAUDE.md` for how to run commands and for anything it requires in
+the final task steps (e.g. a standard set of verification commands, or opening a PR).
 
 ## Critical constraint: each step must be independently executable
 
-Every checked-off step will be picked up by `/work-task` in a **brand-new session with no
-memory of this conversation** — only the spec, the task file, and the codebase as it exists
-at that time. A step like "wire up the rest of the API" is not usable. Each step must name
-concrete files/functions/endpoints to touch and state a concrete "done when" condition, so
-a cold session can execute it correctly without needing to ask anything first.
+Every step will be picked up by `/work-task` in a **brand-new session with no memory of
+this conversation** — only the spec, the task file, and the codebase as it then exists. A
+step like "wire up the rest of the API" is not usable. Each step must name the concrete
+files, functions or endpoints to touch and state a concrete "done when" condition, so a
+cold session can execute it without asking anything first.
 
 ## Steps
 
-1. Read the target spec in full (ask which one if not obvious/given). If its `status` is
-   still `draft`, stop and confirm with the user that it's ready to move forward — don't
-   silently promote a draft.
-2. Read the current state of the relevant code so steps reference what's actually there,
-   not stale assumptions from when the spec was written.
-3. Break the spec's Design/Scope into an ordered sequence of small, concrete,
-   independently-executable steps. Order for dependencies (e.g. schema before routes
+1. **Check preconditions.**
+   - Read the target spec in full (ask which one if not obvious or given).
+   - Spec `status: draft`: stop and confirm with the user that it's ready. Don't silently
+     promote a draft.
+   - Spec `status: in-progress` or `implemented`: tasks were already generated or the work
+     is done. Say so and ask what the user wants before going further.
+   - A task file for this spec already exists with any `- [x]` items: don't overwrite it.
+     Show what's done and ask whether to regenerate (losing progress markers) or amend in
+     place.
+   - Confirm `docs/specs/tasks/` is *not* gitignored; remove any blanket ignore entry for
+     it if one exists.
+
+2. **Read the current state of the relevant code**, so steps reference what's actually
+   there rather than assumptions from when the spec was written.
+
+3. **Break the spec's Design/Scope into an ordered sequence of small, concrete,
+   independently-executable steps.** Order for dependencies (e.g. schema before routes
    before UI).
-4. Write `docs/specs/tasks/<name>.md`:
+
+4. **Write `docs/specs/tasks/<name>.md`:**
 
    ```markdown
    # Tasks: <spec title>
@@ -44,24 +56,23 @@ a cold session can execute it correctly without needing to ask anything first.
    - [ ] 2. ...
    ```
 
-5. Do a quick review pass of the written task file against the spec — a different failure
-   mode than a spec-level red-team pass (which checks the *design*), this checks the
-   *decomposition*: dropped details, ordering/dependency mistakes (e.g. a step that wires
-   something to a placeholder only for a later step to replace it — reorder instead so
-   the dependency is built first), and steps that aren't self-contained enough for a cold
-   `/work-task` session to execute without asking a question first. Fix pure decomposition
-   issues directly in the task file. But if this pass surfaces something that's actually a
-   gap in the *spec's own content* — e.g. a Design-section fix with no corresponding
-   Testing-section requirement, or a Scope item the Design section never actually
-   addresses — fold that back into the spec too (with its own short retrospective note,
-   same convention as a red-team pass), not just the task file: the task file is only a
-   record of how the work was broken down, but the spec is the durable "what and why," and
-   a content gap that lives only in the task file is invisible to anyone who reads the spec
-   alone.
-6. Update the spec's frontmatter to `status: in-progress`.
-7. Tell the user the task file is ready and that each `- [ ]` item is meant to be run via
-   `/work-task` in its own fresh session.
+5. **Review the written task file against the spec.** This checks the *decomposition*, a
+   different failure mode from a spec-level red-team pass, which checks the *design*. Look
+   for:
+   - dropped details;
+   - ordering or dependency mistakes — e.g. a step that wires something to a placeholder
+     that a later step replaces. Reorder so the dependency is built first;
+   - steps too vague for a cold `/work-task` session to execute without asking a question.
 
-If a task file for this spec already exists and has any `- [x]` items checked, do not
-silently overwrite it — show the user what's already done and ask whether to regenerate
-(losing progress markers) or amend it in place.
+   Fix decomposition issues directly in the task file.
+
+   If the pass exposes a gap in the *spec's own content* — e.g. a Design-section fix with
+   no matching Testing requirement, or a Scope item the Design never addresses — fold the
+   fix back into the spec too, with a short retrospective note (same convention as a
+   red-team pass). The task file is only a record of the breakdown; a content gap that
+   lives only there is invisible to anyone reading the spec alone.
+
+6. **Set the spec's frontmatter to `status: in-progress`.**
+
+7. **Tell the user the task file is ready**, and that each `- [ ]` item is meant to be run
+   via `/work-task` in its own fresh session.
