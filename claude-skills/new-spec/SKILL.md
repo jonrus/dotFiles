@@ -12,7 +12,8 @@ versioned single source of truth for a scoped piece of work. This skill only wri
 skip ahead to tasks or code here.
 
 Follow the project's `CLAUDE.md` for branch creation, slug conventions (including checking
-the slug isn't already in use), numbering, and how to run commands.
+the slug isn't already in use), numbering, committing, and how to run commands. Where
+`CLAUDE.md` conflicts with this file on those points, `CLAUDE.md` wins.
 
 Spec status lifecycle: `draft` (this skill) → `in-progress` (set by `/spec-tasks`) →
 `implemented` (set by `/work-task` on the last step). Don't set the latter two here.
@@ -24,6 +25,11 @@ marked `status: refined`), read it in full. Use its `Firm Scope`, `Nice-to-have 
 `Explicitly Out of Scope` and `Resolved Decisions` as the starting point for step 2 instead
 of interviewing from scratch. That conversation already happened; don't re-derive it.
 Confirm it still holds against the current codebase and fill any gaps.
+
+Check its `status` first. `refined` is the expected value. If it's `draft`, the scoping
+wasn't finished: tell the user and suggest `/new-feature` first, unless they want to
+proceed anyway. If it's `promoted`, a spec already exists (see `promoted_to`): stop and
+ask rather than writing a second spec or overwriting that pointer.
 
 If something in the feature file turns out wrong or incomplete, don't edit it to fix that.
 The spec is the source of truth, so put the correction and its reasoning in the spec's
@@ -107,4 +113,6 @@ With no feature file, interview the user directly. A feature file is never requi
    use for corrections found during implementation, and it stops a future reader trusting
    a stale claim in isolation.
 
-8. **Stop here.** Don't generate a task file or write code; hand off to `/spec-tasks`.
+8. **Commit and stop.** Commit the spec (and the updated feature file and product-doc
+   pointer, if any) per the project's conventions. Don't generate a task file or write
+   code; hand off to `/spec-tasks`.

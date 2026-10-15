@@ -13,8 +13,9 @@ permanently, even after the spec reaches `implemented`: the spec is the durable 
 *what* and *why*, and the task file records how the work was broken down and sequenced,
 which is useful source material later (e.g. for documentation).
 
-Follow the project's `CLAUDE.md` for how to run commands and for anything it requires in
-the final task steps (e.g. a standard set of verification commands, or opening a PR).
+Follow the project's `CLAUDE.md` for how to run commands, committing, and anything it
+requires in the final task steps (e.g. a standard set of verification commands, or opening
+a PR). Where `CLAUDE.md` conflicts with this file on those points, `CLAUDE.md` wins.
 
 ## Critical constraint: each step must be independently executable
 
@@ -72,7 +73,9 @@ cold session can execute it without asking anything first.
    red-team pass). The task file is only a record of the breakdown; a content gap that
    lives only there is invisible to anyone reading the spec alone.
 
-6. **Set the spec's frontmatter to `status: in-progress`.**
+6. **Set the spec's frontmatter to `status: in-progress`**, then commit the task file and
+   the spec change per the project's conventions, so the first `/work-task` session
+   starts from a clean tree.
 
 7. **Tell the user the task file is ready**, and that each `- [ ]` item is meant to be run
    via `/work-task` in its own fresh session.

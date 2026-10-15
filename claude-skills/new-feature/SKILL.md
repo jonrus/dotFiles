@@ -12,8 +12,9 @@ file so it survives interrupted sessions and machine switches. `/new-spec` then 
 an already-resolved problem statement.
 
 Follow the project's `CLAUDE.md` for branch creation, slug conventions (including checking
-the slug isn't already in use by another branch, spec or feature file), and how to run
-commands.
+the slug isn't already in use by another branch, spec or feature file), committing, and how
+to run commands. Where `CLAUDE.md` conflicts with this file on those points, `CLAUDE.md`
+wins.
 
 ## Critical constraint: never write the spec
 
@@ -27,7 +28,8 @@ Feature status lifecycle: `draft` → `refined` (this skill) → `promoted` (set
 ## Steps
 
 1. **Find the feature file.**
-   - Given a path: use it.
+   - Given a path: use it. If its `status` is `refined` or `promoted`, stop and ask what
+     the user wants (re-open refinement, or go to `/new-spec`) rather than re-running.
    - Otherwise look in `docs/features/` for `status: draft` files, excluding
      `000-feature_template.md` (never a real feature). One match: use it. Several: ask
      which.
@@ -88,4 +90,5 @@ Feature status lifecycle: `draft` → `refined` (this skill) → `promoted` (set
    - Summarize the feature file's state: Firm Scope, Nice-to-have, Explicitly Out, and the
      resolved decisions behind each in-scope item.
    - Set the frontmatter to `status: refined`.
+   - Commit the feature file per the project's conventions.
    - Tell the user it's ready for `/new-spec docs/features/NNN-slug.md`, and stop.
